@@ -2,8 +2,6 @@ package com.subratrout.controllers;
 
 import com.subratrout.domain.Product;
 import com.subratrout.services.ProductService;
-import org.hamcrest.*;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -13,6 +11,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -74,7 +73,7 @@ public class ProductControllerTest {
         mockMvc.perform(get("/product/show/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("product/show"))
-                .andExpect(model().attribute("product", instanceOf(Product.class)));
+                .andExpect(model().attribute("product", org.hamcrest.Matchers.instanceOf(Product.class)));
     }
 
     @Test
@@ -87,7 +86,7 @@ public class ProductControllerTest {
         mockMvc.perform(get("/product/edit/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("product/productform"))
-                .andExpect(model().attribute("product", instanceOf(Product.class)));
+                .andExpect(model().attribute("product", org.hamcrest.Matchers.instanceOf(Product.class)));
     }
 
     @Test
@@ -100,7 +99,7 @@ public class ProductControllerTest {
         mockMvc.perform(get("/product/new"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("product/productform"))
-                .andExpect(model().attribute("product", instanceOf(Product.class)));
+                .andExpect(model().attribute("product", org.hamcrest.Matchers.instanceOf(Product.class)));
     }
 
     @Test
@@ -125,11 +124,11 @@ public class ProductControllerTest {
         .param("imageUrl", "example.com"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/product/show/1"))
-                .andExpect(model().attribute("product", instanceOf(Product.class)))
-                .andExpect(model().attribute("product", hasProperty("id", is(id))))
-                .andExpect(model().attribute("product", hasProperty("description", is(description))))
-                .andExpect(model().attribute("product", hasProperty("price", is(price))))
-                .andExpect(model().attribute("product", hasProperty("imageUrl", is(imageUrl))));
+                .andExpect(model().attribute("product", org.hamcrest.Matchers.instanceOf(Product.class)))
+                .andExpect(model().attribute("product", org.hamcrest.Matchers.hasProperty("id", org.hamcrest.Matchers.is(id))))
+                .andExpect(model().attribute("product", org.hamcrest.Matchers.hasProperty("description", org.hamcrest.Matchers.is(description))))
+                .andExpect(model().attribute("product", org.hamcrest.Matchers.hasProperty("price", org.hamcrest.Matchers.is(price))))
+                .andExpect(model().attribute("product", org.hamcrest.Matchers.hasProperty("imageUrl", org.hamcrest.Matchers.is(imageUrl))));
 
         //Verify properties of bound object
         ArgumentCaptor<Product> boundProduct = ArgumentCaptor.forClass(Product.class);
