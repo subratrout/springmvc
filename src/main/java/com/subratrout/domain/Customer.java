@@ -1,11 +1,22 @@
 package com.subratrout.domain;
 
+import javax.persistence.*;
+
 /**
  * Created by subratrout on 3/13/17.
  */
+
+@Entity
 public class Customer implements DomainObject{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private Integer id;
+
+    @Version
+    private Integer version;
+
     private String firstName;
     private String lastName;
     private String email;
@@ -15,6 +26,16 @@ public class Customer implements DomainObject{
     private String city;
     private String state;
     private String zipCode;
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+
 
     @Override
     public Integer getId() {
