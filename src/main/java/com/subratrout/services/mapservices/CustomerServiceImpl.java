@@ -1,7 +1,9 @@
-package com.subratrout.services;
+package com.subratrout.services.mapservices;
 
 import com.subratrout.domain.Customer;
 import com.subratrout.domain.DomainObject;
+import com.subratrout.services.CustomerService;
+import com.subratrout.services.mapservices.AbstractMapService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 

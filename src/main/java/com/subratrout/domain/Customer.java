@@ -35,7 +35,8 @@ public class Customer implements DomainObject{
         this.version = version;
     }
 
-
+    @OneToOne(cascade = {CascadeType.ALL})
+    private User user;
 
     @Override
     public Integer getId() {
@@ -117,5 +118,11 @@ public class Customer implements DomainObject{
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    public User getUser(){ return  user; }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

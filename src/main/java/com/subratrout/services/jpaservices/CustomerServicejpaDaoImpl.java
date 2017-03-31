@@ -1,6 +1,9 @@
-package com.subratrout.services;
+package com.subratrout.services.jpaservices;
 
 import com.subratrout.domain.Customer;
+import com.subratrout.services.CustomerService;
+import com.subratrout.services.security.EncryptionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +17,13 @@ import java.util.List;
  */
 @Service
 @Profile("jpadao")
-public class CustomerServicejpaDaoImpl implements CustomerService{
+public class CustomerServicejpaDaoImpl extends  AbstractJpaDaoService implements CustomerService {
 
-    private EntityManagerFactory emf;
+    private EncryptionService encryptionService;
 
-    @PersistenceUnit
-    public void setEmf(EntityManagerFactory emf) {
-        this.emf = emf;
+    @Autowired
+    public void setEncryptionService(EncryptionService encryptionService){
+        this.encryptionService = encryptionService;
     }
 
     @Override

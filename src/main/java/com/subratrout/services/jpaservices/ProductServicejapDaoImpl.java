@@ -1,6 +1,7 @@
-package com.subratrout.services;
+package com.subratrout.services.jpaservices;
 
 import com.subratrout.domain.Product;
+import com.subratrout.services.ProductService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,7 @@ import java.util.List;
  */
 @Service
 @Profile("jpadao")
-public class ProductServicejapDaoImpl implements ProductService{
-
-    private EntityManagerFactory emf;
-
-    @PersistenceUnit
-    public void setEmf(EntityManagerFactory emf) {
-        this.emf = emf;
-    }
+public class ProductServicejapDaoImpl extends AbstractJpaDaoService implements ProductService {
 
     @Override
     public List<Product> listAll() {

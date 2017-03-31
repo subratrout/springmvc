@@ -1,4 +1,4 @@
-package com.subratrout.services;
+package com.subratrout.services.mapservices;
 
 import com.subratrout.domain.DomainObject;
 
