@@ -35,7 +35,7 @@ public class Customer implements DomainObject{
         this.version = version;
     }
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne
     private User user;
 
     @Override
