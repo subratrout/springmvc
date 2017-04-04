@@ -12,6 +12,8 @@ public class CartDetail implements DomainObject {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    private Integer quantity;
+
     @Version
     private Integer version;
 
@@ -54,4 +56,14 @@ public class CartDetail implements DomainObject {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+
 }
