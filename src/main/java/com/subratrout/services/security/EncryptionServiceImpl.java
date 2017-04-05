@@ -12,6 +12,7 @@ public class EncryptionServiceImpl implements EncryptionService{
 
     private StrongPasswordEncryptor strongEncryptor;
 
+    @Autowired
     public void setStrongEncryptor(StrongPasswordEncryptor strongEncryptor) {
         this.strongEncryptor = strongEncryptor;
     }
