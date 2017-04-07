@@ -14,7 +14,7 @@ import java.util.List;
  * Created by subratrout on 3/23/17.
  */
 @Service
-@Profile("jpadao")
+@Profile("jpadao-donot-use")
 public class ProductServicejapDaoImpl extends AbstractJpaDaoService implements ProductService {
 
     @Override
