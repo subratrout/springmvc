@@ -1,9 +1,11 @@
 package com.subratrout.bootstrap;
 
 import com.subratrout.domain.*;
+import com.subratrout.domain.security.Role;
 import com.subratrout.enums.OrderStatus;
 import com.subratrout.services.CustomerService;
 import com.subratrout.services.ProductService;
+import com.subratrout.services.RoleService;
 import com.subratrout.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -21,6 +23,7 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
 
     private ProductService productService;
     private UserService userService;
+    private RoleService roleService;
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -32,13 +35,40 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         this.userService = userService;
     }
 
+    @Autowired
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         loadProducts();
         loadUsersAndCustomers();
         loadCarts();
         loadOrderHistory();
+        loadRoles();
+        assignUsersToDefaultRole();
 
+    }
+
+    private void assignUsersToDefaultRole(){
+        List<Role> roles = (List<Role>) roleService.listAll();
+        List<User> users = (List<User>) userService.listAll();
+
+        roles.forEach(role -> {
+            if(role.getRole().equalsIgnoreCase("CUSTOMER")){
+                users.forEach(user -> {
+                    user.addRole(role);
+                    userService.saveOrUpdate(user);
+                });
+            }
+        });
+    }
+
+    private void loadRoles(){
+        Role role = new Role();
+        role.setRole("CUSTOMER");
+        roleService.saveOrUpdate(role);
     }
 
     private void loadOrderHistory() {
