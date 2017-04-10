@@ -1,5 +1,7 @@
 package com.subratrout.services.jpaservices;
 
+import com.subratrout.commands.CustomerForm;
+import com.subratrout.converters.CustomerFormToCustomer;
 import com.subratrout.domain.Customer;
 import com.subratrout.services.CustomerService;
 import com.subratrout.services.security.EncryptionService;
@@ -20,6 +22,7 @@ import java.util.List;
 public class CustomerServicejpaDaoImpl extends  AbstractJpaDaoService implements CustomerService {
 
     private EncryptionService encryptionService;
+    private CustomerFormToCustomer customerFormToCustomer;
 
     @Autowired
     public void setEncryptionService(EncryptionService encryptionService){
@@ -43,10 +46,31 @@ public class CustomerServicejpaDaoImpl extends  AbstractJpaDaoService implements
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
+
+        if (domainObject.getUser() != null && domainObject.getUser().getPassword() != null) {
+            domainObject.getUser().setEncryptedPassword(
+                    encryptionService.encryptString(domainObject.getUser().getPassword()));
+        }
+
         Customer savedCustomer = em.merge(domainObject);
         em.getTransaction().commit();
 
         return savedCustomer;
+    }
+
+    @Override
+    public Customer saveOrUpdateCustomerForm(CustomerForm customerForm) {
+        Customer newCustomer = customerFormToCustomer.convert(customerForm);
+
+        //enhance if saved
+        if(newCustomer.getUser().getId() != null){
+            Customer existingCustomer = getById(newCustomer.getUser().getId());
+
+            //set enabled flag from db
+            newCustomer.getUser().setEnabled(existingCustomer.getUser().getEnabled());
+        }
+
+        return saveOrUpdate(newCustomer);
     }
 
     @Override
