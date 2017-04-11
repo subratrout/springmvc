@@ -1,9 +1,12 @@
 package com.subratrout.services.mapservices;
 
+import com.subratrout.commands.ProductForm;
+import com.subratrout.converters.ProductFormToProduct;
 import com.subratrout.domain.DomainObject;
 import com.subratrout.domain.Product;
 import com.subratrout.services.ProductService;
 import com.subratrout.services.mapservices.AbstractMapService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,13 @@ import java.util.*;
 @Service
 @Profile("map")
 public class ProductServiceImpl extends AbstractMapService implements ProductService {
+
+    private ProductFormToProduct productFormToProduct;
+
+    @Autowired
+    public void setProductFormToProduct(ProductFormToProduct productFormToProduct) {
+        this.productFormToProduct = productFormToProduct;
+    }
 
     @Override
     public List<DomainObject> listAll() {
@@ -41,6 +51,11 @@ public class ProductServiceImpl extends AbstractMapService implements ProductSer
     @Override
     protected void loadDomainObjects() {
 
+    }
+
+    @Override
+    public Product saveOrUpdateProductForm(ProductForm productForm) {
+        return saveOrUpdate(productFormToProduct.convert(productForm));
     }
 
 }

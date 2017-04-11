@@ -1,5 +1,7 @@
 package com.subratrout.services.reposervices;
 
+import com.subratrout.commands.ProductForm;
+import com.subratrout.converters.ProductFormToProduct;
 import com.subratrout.domain.Product;
 import com.subratrout.repositories.ProductRepository;
 import com.subratrout.services.ProductService;
@@ -18,10 +20,16 @@ import java.util.List;
 public class ProductServiceRepoImpl implements ProductService{
 
     private ProductRepository productRepository;
+    private ProductFormToProduct productFormToProduct;
 
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    @Autowired
+    public void setProductFormToProduct(ProductFormToProduct productFormToProduct) {
+        this.productFormToProduct = productFormToProduct;
     }
 
     @Override
@@ -39,6 +47,11 @@ public class ProductServiceRepoImpl implements ProductService{
     @Override
     public Product saveOrUpdate(Product domainObject){
         return productRepository.save(domainObject);
+    }
+
+    @Override
+    public Product saveOrUpdateProductForm(ProductForm productForm) {
+        return saveOrUpdate(productFormToProduct.convert(productForm));
     }
 
     @Override
