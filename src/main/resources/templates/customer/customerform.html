@@ -23,10 +23,10 @@
             <!--<input type="hidden" th:field="*{id}"/>-->
             <!--<input type="hidden" th:field="*{version}"/>-->
             <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-                <p>Please Correct values in the error below</p>
-                <ul>
-                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}">Validation Error</li>
-                </ul>
+                <p th:text="#{form.hasErrors}">Error Message</p>
+                <!--<ul>-->
+                    <!--<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Validation Error</li>-->
+                <!--</ul>-->
             </div>
             <input type="hidden" th:field="*{userId}"/>
             <input type="hidden" th:field="*{userVersion}"/>
