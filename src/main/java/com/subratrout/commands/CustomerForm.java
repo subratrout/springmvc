@@ -1,5 +1,7 @@
 package com.subratrout.commands;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * Created by subratrout on 4/10/17.
  */
@@ -8,6 +10,8 @@ public class CustomerForm {
     private Integer userVersion;
     private Integer customerId;
     private Integer customerVersion;
+
+    @NotEmpty
     private String userName;
     private String passwordText;
     private String passwordTextConf;
